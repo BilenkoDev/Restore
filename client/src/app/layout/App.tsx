@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Product } from '../models/product';
-import Catalog from '../../features/catalog/Catalog';
+import { useState } from 'react';
+// import { Product } from '../models/product';
+// import Catalog from '../../features/catalog/Catalog';
 import {
   Box,
   Container,
@@ -9,6 +9,7 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import NavBar from './NavBar';
+import { Outlet } from 'react-router-dom';
 
 // const products = [
 //   { name: 'product1', price: 100.0 },
@@ -18,7 +19,7 @@ import NavBar from './NavBar';
 
 function App() {
   // const [products, setProducts] = useState<{name: string, price: number}[]>([])
-  const [products, setProducts] = useState<Product[]>([]);
+  // const [products, setProducts] = useState<Product[]>([]);
   const [darkMode, setDarkMode] = useState(false);
   //const darkMode = true;
   const palleteType = darkMode ? 'dark' : 'light';
@@ -36,11 +37,11 @@ function App() {
     setDarkMode(!darkMode);
   };
 
-  useEffect(() => {
-    fetch('https://localhost:5001/api/products')
-      .then((response) => response.json())
-      .then((data) => setProducts(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch('https://localhost:5001/api/products')
+  //     .then((response) => response.json())
+  //     .then((data) => setProducts(data));
+  // }, []);
 
   // const [products, setProducts] = useState(
   //   [
@@ -75,7 +76,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <NavBar toggleDarkMode={toggleDarkMode} darkMode = {darkMode}/>
+      <NavBar toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
       <Box
         sx={{
           minHeight: '100vh',
@@ -86,7 +87,8 @@ function App() {
         }}
       >
         <Container maxWidth="xl" sx={{ mt: 8 }}>
-          <Catalog products={products} />
+          {/* <Catalog /> */}
+          <Outlet />
         </Container>
       </Box>
     </ThemeProvider>
