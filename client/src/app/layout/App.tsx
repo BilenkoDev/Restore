@@ -1,4 +1,4 @@
-import { useState } from 'react';
+//import { useState } from 'react';
 // import { Product } from '../models/product';
 // import Catalog from '../../features/catalog/Catalog';
 import {
@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import NavBar from './NavBar';
 import { Outlet } from 'react-router-dom';
+import { useAppSelector } from '../store/store';
 
 // const products = [
 //   { name: 'product1', price: 100.0 },
@@ -17,11 +18,33 @@ import { Outlet } from 'react-router-dom';
 //   { name: 'product3', price: 300.0 },
 // ];
 
+//moved to uiSlice
+// const getInitialdarkMode = () => {
+//   const storeDarkMode = localStorage.getItem('darkMode');
+//   return storeDarkMode ? JSON.parse(storeDarkMode) : true
+// }
+
 function App() {
+  //1
+  // const [products, setProducts] = useState(
+  //   [
+  //   { name: 'product1', price: 100.0 },
+  //   { name: 'product2', price: 200.0 }
+  // ]
+  // )
+
+  //2
   // const [products, setProducts] = useState<{name: string, price: number}[]>([])
+
+  //3 using Product type array after import { Product } from '../models/product';
   // const [products, setProducts] = useState<Product[]>([]);
-  const [darkMode, setDarkMode] = useState(false);
-  //const darkMode = true;
+
+  // const [darkMode, setDarkMode] = useState(false);
+  // const [darkMode, setDarkMode] = useState(getInitialDarkMode());
+
+   const {darkMode} =  useAppSelector (state => state.ui);
+
+   
   const palleteType = darkMode ? 'dark' : 'light';
 
   const theme = createTheme({
@@ -33,9 +56,10 @@ function App() {
     },
   });
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+  // const toggleDarkMode = () => {
+  //   localStorage.setItem('darkMode', JSON.stringify(!darkMode));
+  //   setDarkMode(!darkMode);
+  // };
 
   // useEffect(() => {
   //   fetch('https://localhost:5001/api/products')
@@ -43,18 +67,8 @@ function App() {
   //     .then((data) => setProducts(data));
   // }, []);
 
-  // const [products, setProducts] = useState(
-  //   [
-  //   { name: 'product1', price: 100.0 },
-  //   { name: 'product2', price: 200.0 }
-  // ]
-  // )
-
   // const addProduct = () =>{
   //   setProducts([...products, { name: 'product3', price: 300.0 }])
-  // }
-
-  // function addProduct(){
   // }
 
   // const addProduct = () => {
@@ -73,10 +87,16 @@ function App() {
   //   ]);
   // };
 
+  // function addProduct(){
+  // }
+
+
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <NavBar toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
+      {/* <NavBar toggleDarkMode={toggleDarkMode} darkMode={darkMode} /> */}
+      <NavBar />
       <Box
         sx={{
           minHeight: '100vh',
@@ -88,7 +108,9 @@ function App() {
       >
         <Container maxWidth="xl" sx={{ mt: 8 }}>
           {/* <Catalog /> */}
-          <Outlet />
+          {/* <Catalog products={products}/> addProduct={addProduct}*/}
+          {/* from react router dom */}
+          <Outlet /> 
         </Container>
       </Box>
     </ThemeProvider>
@@ -96,3 +118,8 @@ function App() {
 }
 
 export default App;
+
+// function getInitialDarkMode(): any {
+//   throw new Error('Function not implemented.');
+// }
+

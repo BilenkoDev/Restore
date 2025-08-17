@@ -41,7 +41,8 @@ export default function ProductCard({product}: Props) {
             sx={{justifyContent: 'space-between'}}
         >
             <Button>Add to cart</Button>
-            {/* React router property inside material element */}
+
+            {/* component, to are React router property (from react.router.dom) inside material element */}
             <Button component={Link} to={`/catalog/${product.id}`}>View</Button>
         </CardActions>
     </Card>

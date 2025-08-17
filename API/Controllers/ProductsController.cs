@@ -9,6 +9,8 @@ namespace API.Controllers
 {
     [Route("api/[controller]")] //https://localhost:50001/api/products
     [ApiController]
+
+    //StoreContext context is a dependency injected
     public class ProductsController(StoreContext context) : ControllerBase
     {
 

@@ -6,19 +6,19 @@ namespace API.Data;
 
 public class DbInitializer
 {
-  public static void InitDb(WebApplication app)
-  {
-    using var scope = app.Services.CreateScope();
-    var context = scope.ServiceProvider.GetRequiredService<StoreContext>()
-    ?? throw new InvalidOperationException("Faild to retrive store context");
-    SeedData(context);
-  }
+    public static void InitDb(WebApplication app)
+    {
+        using var scope = app.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<StoreContext>()
+        ?? throw new InvalidOperationException("Faild to retrive store context");
+        SeedData(context);
+    }
 
-  private static void SeedData(StoreContext context)
-  {
-    context.Database.Migrate();
-    if (context.Products.Any()) return;
-    var products = new List<Product>
+    private static void SeedData(StoreContext context)
+    {
+        context.Database.Migrate();
+        if (context.Products.Any()) return;
+        var products = new List<Product>
     {
           new() {
                     Name = "Angular Speedster Board 2000",
@@ -30,7 +30,7 @@ public class DbInitializer
                     Type = "Boards",
                     QuantityInStock = 100
                 },
-                new() {
+            new() {
                     Name = "Green Angular Board 3000",
                     Description = "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
                     Price = 15000,
@@ -199,7 +199,7 @@ public class DbInitializer
                     QuantityInStock = 100
                 }
     };
-    context.Products.AddRange(products);
-    context.SaveChanges();
-  }
+        context.Products.AddRange(products);
+        context.SaveChanges();
+    }
 }
