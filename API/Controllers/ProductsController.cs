@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")] //https://localhost:50001/api/products
-    [ApiController]
+    // [Route("api/[controller]")] //https://localhost:50001/api/products
+    // [ApiController]
 
     //StoreContext context is a dependency injected
-    public class ProductsController(StoreContext context) : ControllerBase
+    public class ProductsController(StoreContext context) : BaseApiController
     {
 
         [HttpGet]
