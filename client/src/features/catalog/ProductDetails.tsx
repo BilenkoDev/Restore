@@ -14,11 +14,28 @@ import {
   Typography,
 } from '@mui/material';
 import { useFetchProductDetailsQuery } from './catalogApi';
+import {
+  useRemoveBasketItemMutation,
+  useAddBasketItemMutation,
+  useFetchBasketQuery,
+} from '../basket/basketApi';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function ProductDetails() {
   // useParams() is a hook from React router dom, from the current url
   // id is from useParams()
   const { id } = useParams();
+
+  const [removeBasketItem] = useRemoveBasketItemMutation();
+  const [addBasketItem] = useAddBasketItemMutation();
+  const { data: basket } = useFetchBasketQuery();
+  const item = basket?.items.find((x) => x.productId === +id!);
+  const [quantity, setQuantity] = useState(0);
+
+  //useEffect is a Hook that lets you run some code whenever something changes (or when the component first renders).
+  useEffect(() => {
+    if (item) setQuantity(item.quantity);
+  }, [item]);
 
   // const [product, setProduct] = useState<Product | null>(null);
 
@@ -39,6 +56,25 @@ export default function ProductDetails() {
   );
 
   if (!product || isLoading) return <div>Loading ...</div>;
+
+  //functions to update the basket when adding/removing the quantity
+  const handleUpdateBasket = () => {
+    const updatedQuantity = item
+      ? Math.abs(quantity - item.quantity)
+      : quantity;
+    if (!item || quantity > item.quantity) {
+      addBasketItem({ product, quantity: updatedQuantity });
+    } else {
+      removeBasketItem({ productId: product.id, quantity: updatedQuantity });
+    }
+  };
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = +event.currentTarget.value; // + cast string value to a number
+
+    if (value >= 0) setQuantity(value);
+  };
+  ///////////////////////////////////////////////////////////////////
 
   const productDetails = [
     { label: 'Name', value: product.name },
@@ -87,18 +123,24 @@ export default function ProductDetails() {
               type="number"
               label="Quantity in basket"
               fullWidth
-              defaultValue={1}
+              //defaultValue={1} // uncontrolled component
+              value={quantity}
+              onChange={handleInputChange}
             />
           </Grid2>
           <Grid2 size={6}>
             <Button
+              onClick={handleUpdateBasket}
+              disabled={
+                quantity === item?.quantity || (!item && quantity === 0)
+              }
               sx={{ height: '55px' }}
               color="primary"
               size="large"
               variant="contained"
               fullWidth
             >
-              Add to Basket
+              {item ? 'Update quantity' : 'Add to basket'}
             </Button>
           </Grid2>
         </Grid2>

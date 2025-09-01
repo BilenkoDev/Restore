@@ -31,9 +31,11 @@ var app = builder.Build();
 // app.UseAuthorization();
 
 app.UseMiddleware<ExceptionMiddleware>();
+
+//AllowCredentials() allows browser to send a cookie
 app.UseCors(opt =>
 {
-  opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:3000");
+  opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("https://localhost:3000");
 });
 
 app.MapControllers();
