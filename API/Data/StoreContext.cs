@@ -13,4 +13,14 @@ namespace API.Data
         public required DbSet<Product> Products { get; set; }
         public required DbSet<Basket> Baskets { get; set; }
     }
+
+    // public class StoreContext: DbContext
+    // {
+    //     public StoreContext(DbContextOptions<StoreContext> options)
+    //            : base(options)
+    //     {
+    //     }
+    //     public required DbSet<Product> Products { get; set; }
+    //     public required DbSet<Basket> Baskets { get; set; }
+    // }
 }

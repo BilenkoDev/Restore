@@ -10,9 +10,14 @@ namespace API.Controllers
     // [Route("api/[controller]")] //https://localhost:50001/api/products
     // [ApiController]
 
-    //StoreContext context is a dependency injected
-    public class ProductsController(StoreContext context) : BaseApiController
+
+    public class ProductsController: BaseApiController
     {
+        private readonly StoreContext context;
+        public ProductsController(StoreContext context)
+        {
+            this.context = context;
+        }
 
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts()
@@ -28,4 +33,23 @@ namespace API.Controllers
             return product;
         }
     }
-}
+
+    //ProductsController class with primary constructor.
+    // StoreContext context is a dependency injected
+        // public class ProductsController(StoreContext context) : BaseApiController
+        // {
+        //     [HttpGet]
+        //     public async Task<ActionResult<List<Product>>> GetProducts()
+        //     {
+        //         return await context.Products.ToListAsync();
+        //     }
+
+        //     [HttpGet("{id}")] //https://localhost:50001/api/products/2
+        //     public async Task<ActionResult<Product>> GetProduct(int id)
+        //     {
+        //         var product = await context.Products.FindAsync(id);
+        //         if (product == null) return NotFound();
+        //         return product;
+        //     }
+        // }
+    }
